@@ -1,0 +1,14 @@
+{
+"Persönliche Angaben":
+	{
+		"gender": {"display": "Anrede", "required": true, "type": "select", "select-values": {"w": "Frau", "m": "Herr"}},
+		"fname": {"display": "Vorname", "required": true, "type": "text"},
+		"name": {"display": "Nachname", "required": true, "type": "text"},
+		"email": {"display": "Email", "required": true, "type": "email"},
+		"phone": {"display": "Telefon (mobil)", "required": true, "type": "text", "description": "Bitte gib am besten eine Mobilfunknummer an."}	
+	},
+"Sonstiges":
+	{
+		"quarter": {"display": "Unterbringung", "required": true, "type": "select", "select-values": ["Unterbringung benötigt", "Selbst organisiert"], "description": "Bitte gib an, ob wir für Deine Unterbringung sorgen sollen oder ob Du Dich selbst darum kümmern möchtest. ", "distribution": true}
+	}
+}

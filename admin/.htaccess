@@ -1,0 +1,5 @@
+#AuthType Basic
+#AuthName "Passwortschutz"
+#require valid-user
+#AddDefaultCharset UTF-8
+#AuthUserFile D:/xampp/htdocs/simple_booking/admin/.htpasswd

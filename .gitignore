@@ -1,0 +1,4 @@
+*.server
+*.server.*
+config.php
+datafields.json

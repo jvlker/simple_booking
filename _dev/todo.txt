@@ -1,0 +1,16 @@
+TODO Simple-Booking
+====================
+
+- Admin
+	- jquery-ui zieharmonika ?
+	- Besucher-log integrieren
+	
+- Config
+
+- Booking
+	- required felder mit php überprüfen
+	- Bug: bearbeiten speichert die änderungen nicht
+
+- Doku
+- Einfacheres log-interface (messagesystem)
+- test sqlite
