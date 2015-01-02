@@ -78,6 +78,8 @@
 		$no_cols = 1;
 		$distribution = array();
 		$string .= "<table class='admin_table' style='width:100%; font-size: 10pt;'><tr class='highlight'><th>Datum</th>";
+		
+		/** - print table head */
 		foreach(Guard::instance()->getVar("datafields") AS $category => $fields)
 		{
 			foreach($fields AS $key => $field)
@@ -93,6 +95,7 @@
 		$e = PersonalData::getTable("active = 1","id DESC");
 		if(!empty($e)) 
 		{
+			/** - print entries */
 			foreach($e as $entry){
 				$string .= "<tr><td>" . date("d.m.Y", $entry["time"]). "<br />" . date("H:i", $entry["time"]) . "</td>";
 				$data = $entry->getJSON();		
@@ -117,10 +120,11 @@
 								$distribution[$key][$d] = 1;
 					}
 				}
-				$string .= "<td><a href='?action=remove_entry&id=" . $entry->id . "' onclick='return confirm(\"Diesen Eintrag wirklich löschen?\");'>löschen</a></td>";
+				$string .= "<td><a href='?action=remove_entry&id=" . $entry->id . "' onclick='return confirm(\"Diesen Eintrag wirklich löschen? (Dabei wird der Eintrag nur archiviert und kann von einem Admin auch wiederhergestellt werden.)\");'>löschen</a></td>";
 				$string .= "</tr>";
 			}
 			
+			/** - print distribution */
 			$string .= "<tr class='highlight'><td></td>";
 			foreach(Guard::instance()->getVar("datafields") AS $category => $fields)
 			{
@@ -129,10 +133,14 @@
 					$string .= "<td class='textXS'>";
 					if(isset($field["distribution"]) && $field["distribution"] === true)
 					{
+						$string .= "<table>";
 						foreach($distribution[$key] AS $dk => $dv)
 						{
-							$string .= $dk . ": " . $dv . "<br />";
+							if(empty($dk))
+								$dk = "<i>leer</i>";
+							$string .= "<tr><td>" . $dk . "</td><td>" . $dv . "</td></tr>";
 						}
+						$string .= "</table>";
 					}	
 					$string .= "</td>";
 				}	
@@ -151,9 +159,13 @@
 		$string .= "<table class='admin_table' style='width:100%;'>"
 			."<tr><th>Info</th><th>Beschreibung</th></tr>";
 		$logs = Log::getTable("1", "lo_time DESC LIMIT 0,50");
-		foreach($logs as $log){
-			$string .= "<tr><td class='textM'><b>".date("d.m.Y, H:i:s", $log["lo_time"])."</b>, Code: <b>".$log["lo_code"]."</b><br />"
-				.$log["lo_message"]."</td><td><div style='max-height:150px; overflow:auto;'>".htmlspecialchars_decode($log["lo_description"])."</div></td></tr>";
+		if(!empty($logs)) {
+			foreach($logs as $log){
+				$string .= "<tr><td class='textM'><b>".date("d.m.Y, H:i:s", $log["lo_time"])."</b>, Code: <b>".$log["lo_code"]."</b><br />"
+					.$log["lo_message"]."</td><td><div style='max-height:150px; overflow:auto;'>".htmlspecialchars_decode($log["lo_description"])."</div></td></tr>";
+			}
+		} else {
+			$string .= "<tr><td colspan='2'><i>keine Einträge</i></td></tr>";
 		}
 		$string .= "</table>";
 		return $string;
